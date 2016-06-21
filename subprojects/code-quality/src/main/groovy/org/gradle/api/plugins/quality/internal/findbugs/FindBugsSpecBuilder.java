@@ -44,6 +44,7 @@ public class FindBugsSpecBuilder {
     private String reportLevel;
     private String maxHeapSize;
     private Collection<String> visitors;
+    private Collection<String> jvmArgs;
     private Collection<String> omitVisitors;
     private File excludeFilter;
     private File includeFilter;
@@ -151,6 +152,11 @@ public class FindBugsSpecBuilder {
         return this;
     }
 
+    public FindBugsSpecBuilder withJvmArgs(Collection<String> jvmArgs) {
+        this.jvmArgs = jvmArgs;
+        return this;
+    }
+
     public FindBugsSpec build() {
         ArrayList<String> args = new ArrayList<String>();
         args.add("-pluginList");
@@ -239,7 +245,7 @@ public class FindBugsSpecBuilder {
             args.add(classFile.getAbsolutePath());
         }
 
-        return new FindBugsSpec(args, maxHeapSize, debugEnabled);
+        return new FindBugsSpec(args, maxHeapSize, debugEnabled, jvmArgs);
     }
 
     private boolean has(String str) {
