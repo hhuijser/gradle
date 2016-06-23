@@ -155,6 +155,13 @@ class FindBugs extends SourceTask implements VerificationTask, Reporting<FindBug
     @Optional
     Collection<String> extraArgs = []
 
+    /**
+     * Any additional arguments to be passed along to FindBugs JVM process
+     */
+    @Input
+    @Optional
+    Collection<String> jvmArgs = []
+
     @Nested
     private final FindBugsReportsImpl reports
 
@@ -270,6 +277,7 @@ class FindBugs extends SourceTask implements VerificationTask, Reporting<FindBug
             .withClasspath(getClasspath())
             .withDebugging(logger.isDebugEnabled())
             .withEffort(getEffort())
+            .withJvmArgs(getJvmArgs())
             .withReportLevel(getReportLevel())
             .withMaxHeapSize(getMaxHeapSize())
             .withVisitors(getVisitors())
