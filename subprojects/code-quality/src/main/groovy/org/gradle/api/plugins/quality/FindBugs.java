@@ -92,6 +92,8 @@ public class FindBugs extends SourceTask implements VerificationTask, Reporting<
 
     private Collection<String> extraArgs = new ArrayList<String>();
 
+    private Collection<String> jvmArgs = new ArrayList<String>();
+
     @Nested
     private final FindBugsReportsInternal reports;
 
@@ -247,6 +249,7 @@ public class FindBugs extends SourceTask implements VerificationTask, Reporting<
             .withIncludeFilter(getIncludeFilter())
             .withExcludeBugsFilter(getExcludeBugsFilter())
             .withExtraArgs(getExtraArgs())
+            .withJvmArgs(getJvmArgs())
             .configureReports(getReports());
 
         return specBuilder.build();
@@ -290,6 +293,20 @@ public class FindBugs extends SourceTask implements VerificationTask, Reporting<
 
     public FindBugs extraArgs(String... arguments) {
         extraArgs.addAll(Arrays.asList(arguments));
+        return this;
+    }
+
+
+    public FindBugs jvmArgs(Iterable<String> arguments) {
+        for (String argument : arguments) {
+            jvmArgs.add(argument);
+        }
+
+        return this;
+    }
+
+    public FindBugs jvmArgs(String... arguments) {
+        jvmArgs.addAll(Arrays.asList(arguments));
         return this;
     }
 
@@ -490,4 +507,14 @@ public class FindBugs extends SourceTask implements VerificationTask, Reporting<
         this.extraArgs = extraArgs;
     }
 
+    /*
+     * Any additional arguments to be passed along to FindBugs JVM process
+     */
+    public Collection<String> getJvmArgs() {
+        return jvmArgs;
+    }
+
+    public void setJvmArgs(Collection<String> jvmArgs) {
+        this.jvmArgs = jvmArgs;
+    }
 }
